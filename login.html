@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - SITTA Universitas Terbuka</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Custom Alert -->
+  <div id="customAlert" class="custom-alert">
+    <div id="alertIcon">⚠️</div>
+    <div id="alertMessage">Pesan alert.</div>
+  </div>
+
+  <div class="auth-wrapper">
+    <div class="auth-card glass">
+      <div class="auth-header">
+        <div class="auth-logo">UT</div>
+        <h2>Masuk ke SITTA</h2>
+        <p>Sistem Informasi Tiras dan Transaksi Bahan Ajar</p>
+      </div>
+      <div style="background-color: rgba(37, 99, 235, 0.1); border-left: 4px solid var(--primary-color); padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px; font-size: 0.85rem;">
+        <strong>Info Login Dummy:</strong><br>
+        Email: <code>rina@ut.ac.id</code><br>
+        Password: <code>rina123</code>
+      </div>
+      
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" class="form-control" placeholder="Masukkan email Anda" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" id="password" class="form-control" placeholder="Masukkan password Anda" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+      </form>
+      
+      <div class="auth-links">
+        <a href="#" onclick="openModal('forgotModal')">Lupa Password?</a>
+        <a href="#" onclick="openModal('registerModal')">Daftar Akun Baru</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Lupa Password -->
+  <div id="forgotModal" class="modal-overlay">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal('forgotModal')">&times;</span>
+      <h3>Lupa Password</h3>
+      <p class="mb-4">Masukkan email Anda untuk mereset password.</p>
+      <form onsubmit="handleForgotPassword(event)">
+        <div class="form-group">
+          <label for="forgotEmail" class="form-label">Email Terdaftar</label>
+          <input type="email" id="forgotEmail" class="form-control" placeholder="Email Anda" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Kirim Link Reset</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Daftar -->
+  <div id="registerModal" class="modal-overlay">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal('registerModal')">&times;</span>
+      <h3>Daftar Akun</h3>
+      <p class="mb-4">Daftarkan akun baru untuk akses SITTA.</p>
+      <form onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label for="regName" class="form-label">Nama Lengkap</label>
+          <input type="text" id="regName" class="form-control" placeholder="Nama lengkap Anda" required>
+        </div>
+        <div class="form-group">
+          <label for="regEmail" class="form-label">Email</label>
+          <input type="email" id="regEmail" class="form-control" placeholder="Email Anda" required>
+        </div>
+        <div class="form-group">
+          <label for="regPassword" class="form-label">Password</label>
+          <input type="password" id="regPassword" class="form-control" placeholder="Password baru" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Daftar Sekarang</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

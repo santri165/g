@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stok Bahan Ajar - SITTA</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Custom Alert -->
+  <div id="customAlert" class="custom-alert">
+    <div id="alertIcon">⚠️</div>
+    <div id="alertMessage">Pesan alert.</div>
+  </div>
+
+  <div class="layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-text">SITTA UT</div>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="dashboard.html" class="nav-link">
+            <span>🏠 Dashboard Utama</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="stok.html" class="nav-link active">
+            <span>📚 Informasi Bahan Ajar</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="tracking.html" class="nav-link">
+            <span>🚚 Tracking Pengiriman</span>
+          </a>
+        </li>
+        <li class="nav-item" style="padding: 1rem; color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 1rem;">
+          LAPORAN
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" onclick="showDevAlert(event)">
+            <span>📊 Monitoring Progress DO</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" onclick="showDevAlert(event)">
+            <span>📋 Rekap Bahan Ajar</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" onclick="showDevAlert(event)">
+            <span>🕒 Histori Transaksi</span>
+          </a>
+        </li>
+      </ul>
+      <div style="padding: 1.5rem; border-top: 1px solid var(--border-color);">
+        <button onclick="handleLogout()" class="btn btn-secondary btn-block">Logout</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="d-flex align-center gap-3">
+          <button class="btn btn-secondary d-none" id="menuToggle" style="padding: 0.5rem;">☰</button>
+          <div class="greeting" id="greetingMessage">Selamat Datang!</div>
+        </div>
+        <div class="user-profile">
+          <div class="avatar" id="userAvatar">U</div>
+          <span style="font-weight: 500;" id="userNameDisplay">Pengguna</span>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <div class="d-flex justify-between align-center mb-4">
+          <h2>Informasi Stok Bahan Ajar</h2>
+          <button class="btn btn-primary" onclick="openModal('addStokModal')">+ Tambah Bahan Ajar</button>
+        </div>
+
+        <div class="card table-responsive">
+          <table class="table" id="stokTable">
+            <thead>
+              <tr>
+                <th>Cover</th>
+                <th>Kode Lokasi</th>
+                <th>Kode Barang</th>
+                <th>Nama Barang</th>
+                <th>Jenis</th>
+                <th>Edisi</th>
+                <th>Stok</th>
+              </tr>
+            </thead>
+            <tbody id="stokTableBody">
+              <!-- Baris tabel di-generate via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal Tambah Stok -->
+  <div id="addStokModal" class="modal-overlay">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal('addStokModal')">&times;</span>
+      <h3>Tambah Bahan Ajar</h3>
+      <p class="mb-4">Masukkan detail bahan ajar baru ke dalam sistem.</p>
+      <form onsubmit="handleAddStok(event)">
+        <div class="form-group">
+          <label for="inputKodeLokasi" class="form-label">Kode Lokasi</label>
+          <input type="text" id="inputKodeLokasi" class="form-control" placeholder="Contoh: 0JKT01" required>
+        </div>
+        <div class="d-flex gap-3">
+          <div class="form-group" style="flex: 1;">
+            <label for="inputKodeBarang" class="form-label">Kode Barang</label>
+            <input type="text" id="inputKodeBarang" class="form-control" placeholder="Contoh: EKMA4216" required>
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label for="inputEdisi" class="form-label">Edisi</label>
+            <input type="number" id="inputEdisi" class="form-control" placeholder="Contoh: 1" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputNamaBarang" class="form-label">Nama Barang</label>
+          <input type="text" id="inputNamaBarang" class="form-control" placeholder="Nama Bahan Ajar" required>
+        </div>
+        <div class="d-flex gap-3">
+          <div class="form-group" style="flex: 1;">
+            <label for="inputJenis" class="form-label">Jenis Barang</label>
+            <select id="inputJenis" class="form-control" required>
+              <option value="BMP">BMP</option>
+              <option value="Non-BMP">Non-BMP</option>
+            </select>
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label for="inputStok" class="form-label">Jumlah Stok</label>
+            <input type="number" id="inputStok" class="form-control" placeholder="0" required>
+          </div>
+        </div>
+        <!-- For simplicity, use a default placeholder cover image for new items -->
+        <button type="submit" class="btn btn-primary btn-block">Simpan Data</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Inisialisasi
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+      updateGreeting();
+      displayUserInfo();
+      renderStokTable();
+    });
+  </script>
+</body>
+</html>

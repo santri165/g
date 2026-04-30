@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracking - SITTA</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Custom Alert -->
+  <div id="customAlert" class="custom-alert">
+    <div id="alertIcon">⚠️</div>
+    <div id="alertMessage">Pesan alert.</div>
+  </div>
+
+  <div class="layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-text">SITTA UT</div>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="dashboard.html" class="nav-link">
+            <span>🏠 Dashboard Utama</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="stok.html" class="nav-link">
+            <span>📚 Informasi Bahan Ajar</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="tracking.html" class="nav-link active">
+            <span>🚚 Tracking Pengiriman</span>
+          </a>
+        </li>
+        <li class="nav-item" style="padding: 1rem; color: var(--text-muted); font-size: 0.8rem; font-weight: 600; margin-top: 1rem;">
+          LAPORAN
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" onclick="showDevAlert(event)">
+            <span>📊 Monitoring Progress DO</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" onclick="showDevAlert(event)">
+            <span>📋 Rekap Bahan Ajar</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" onclick="showDevAlert(event)">
+            <span>🕒 Histori Transaksi</span>
+          </a>
+        </li>
+      </ul>
+      <div style="padding: 1.5rem; border-top: 1px solid var(--border-color);">
+        <button onclick="handleLogout()" class="btn btn-secondary btn-block">Logout</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="d-flex align-center gap-3">
+          <button class="btn btn-secondary d-none" id="menuToggle" style="padding: 0.5rem;">☰</button>
+          <div class="greeting" id="greetingMessage">Selamat Datang!</div>
+        </div>
+        <div class="user-profile">
+          <div class="avatar" id="userAvatar">U</div>
+          <span style="font-weight: 500;" id="userNameDisplay">Pengguna</span>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <div class="card">
+          <h2 class="card-title">Lacak Pengiriman (Delivery Order)</h2>
+          <form onsubmit="handleTrackingSearch(event)" class="d-flex gap-3 align-center mt-4 mb-4">
+            <div style="flex-grow: 1;">
+              <input type="text" id="doNumber" class="form-control" placeholder="Masukkan Nomor DO (Contoh: 2023001234)" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Cari Paket</button>
+          </form>
+        </div>
+
+        <!-- Tracking Result Container -->
+        <div id="trackingResult" class="d-none">
+          <div class="card tracking-container">
+            <div class="tracking-header">
+              <div>
+                <h3 id="trackName" style="margin-bottom: 0.5rem;">Nama Mahasiswa</h3>
+                <p id="trackDO" class="text-muted">DO: -</p>
+              </div>
+              <div id="trackStatusBadge" class="status-badge">Status</div>
+            </div>
+            
+            <div class="widgets-grid" style="margin-bottom: 2rem;">
+              <div style="padding: 1rem; background: var(--secondary-color); border-radius: 8px;">
+                <p class="text-muted" style="font-size: 0.8rem;">Ekspedisi</p>
+                <p id="trackEkspedisi" style="font-weight: 600;">-</p>
+              </div>
+              <div style="padding: 1rem; background: var(--secondary-color); border-radius: 8px;">
+                <p class="text-muted" style="font-size: 0.8rem;">Tanggal Kirim</p>
+                <p id="trackDate" style="font-weight: 600;">-</p>
+              </div>
+              <div style="padding: 1rem; background: var(--secondary-color); border-radius: 8px;">
+                <p class="text-muted" style="font-size: 0.8rem;">Total Pembayaran</p>
+                <p id="trackTotal" style="font-weight: 600;">-</p>
+              </div>
+            </div>
+
+            <h4>Riwayat Perjalanan</h4>
+            <div id="timelineContainer" class="timeline mt-4">
+              <!-- Timeline items injected via JS -->
+            </div>
+          </div>
+        </div>
+        
+        <!-- Empty State Container -->
+        <div id="emptyState" class="card text-center" style="padding: 4rem 2rem;">
+          <div style="font-size: 4rem; margin-bottom: 1rem;">📦</div>
+          <h3>Belum ada pencarian</h3>
+          <p>Masukkan Nomor DO untuk melacak status pengiriman bahan ajar Anda.</p>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Inisialisasi
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+      updateGreeting();
+      displayUserInfo();
+    });
+  </script>
+</body>
+</html>
