@@ -543,6 +543,9 @@ p {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  #menuToggle {
+    display: block !important;
+  }
   .sidebar {
     transform: translateX(-100%);
     transition: transform 0.3s;
